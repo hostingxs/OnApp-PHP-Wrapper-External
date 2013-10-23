@@ -213,8 +213,21 @@ class OnApp_CDNResource extends OnApp {
 					'origins_for_api',
 				);
 				$this->unsetFields( $fields );
+                                $this->fields[ 'cname' ] = array(
+                                        ONAPP_FIELD_MAP  => 'cname',
+                                        ONAPP_FIELD_TYPE => 'string',
+                                );
+                                $this->fields[ 'push_origin_hostname' ] = array(
+                                        ONAPP_FIELD_MAP  => 'push_origin_hostname',
+                                        ONAPP_FIELD_TYPE => 'string',
+                                );
 
 				$this->fields[ 'origins' ]                            = array(
+					ONAPP_FIELD_MAP => '_origins',
+					ONAPP_FIELD_TYPE => 'array',
+					ONAPP_FIELD_CLASS => 'CDNResource_Origin',
+				);
+				$this->fields[ 'origin_sites' ]                            = array(
 					ONAPP_FIELD_MAP => '_origins',
 					ONAPP_FIELD_TYPE => 'array',
 					ONAPP_FIELD_CLASS => 'CDNResource_Origin',
@@ -321,10 +334,6 @@ class OnApp_CDNResource extends OnApp {
 			default:
 				$resource = parent::getResource( $action );
 				break;
-		}
-
-		if( in_array( $action, $actions ) ) {
-			$this->logger->debug( 'getResource( ' . $action . ' ): return ' . $resource );
 		}
 
 		return $resource;
